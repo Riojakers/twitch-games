@@ -49,7 +49,7 @@ class Car():
 
     def moveDown(self):
         try:
-            if self.board.get()[self.pos_y+1][self.pos_x] == 0:
+            if self.board.get()[self.pos_y+self.size][self.pos_x] == 0:
                 self.post_y += 1 
             else:
                 logging.warning("The car have crashed against another car")   
@@ -59,7 +59,7 @@ class Car():
 
     def moveRight(self):
         try:
-            if self.board.get()[self.pos_y][self.pos_x+1] == 0:
+            if self.board.get()[self.pos_y][self.pos_x+self.size] == 0:
                 self.pos_x += 1 
             else:
                 logging.warning("The car have crashed against another car")   

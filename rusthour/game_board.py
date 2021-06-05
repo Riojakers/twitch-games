@@ -6,7 +6,7 @@ class GameBoard():
 
     board_matrix = []
     cars = []
-    exit_position = ""
+    exit_position = 0 
     size = 0
 
     def __init__(self, stage, exit_position=3):
@@ -115,13 +115,26 @@ class GameBoard():
         logging.debug("Moving car " + str(car) )
         self.cars[car-1].move(move)
         self.updateMatrix()
-                        
+    
+
+    def checkResolvedStage(self):
+        if self.board_matrix[self.exit_position][-1] == 1:
+            logging.debug("Has ganado") 
+            return True
+        else:
+            return False
+
 
 #TESTS
 if __name__ == '__main__':
     board = GameBoard("1-1")
     board.printBoard()
-    board.moveCar(2, "dw")
-    board.moveCar(1, "up")
+    board.moveCar(1, "rg")
+    board.moveCar(1, "rg")
+    board.moveCar(2, "up")
+    board.moveCar(2, "up")
+    board.moveCar(2, "up")
+    board.moveCar(1, "rg")
+    board.moveCar(1, "rg")
     board.printBoard()
- 
+    board.checkResolvedStage()

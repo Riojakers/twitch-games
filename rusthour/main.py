@@ -4,5 +4,5 @@ from car import Car
 
 
 
-board = GameBoard("1-1")
+boar = GameBoard("1-1")
 

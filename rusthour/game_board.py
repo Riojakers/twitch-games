@@ -9,7 +9,7 @@ class GameBoard():
     exit_position = ""
     size = 0
 
-    def __init__(self, stage, exit_position=4):
+    def __init__(self, stage, exit_position=3):
         self.createBoard(stage)
         self.exit_position = exit_position
         self.parseCarsPositions()
@@ -40,8 +40,6 @@ class GameBoard():
             eccounter = False
             for y in range(self.size):
                 for x in range(self.size):
-                    logging.debug("Car :" + str(car) + " Col: "+ str(x) + " Row: " + str(y))
-                    logging.debug("Valor: " + str( self.board_matrix[y][x]) )
                     car_size = 0
                     car_orientation = ""
                     actual_value = self.board_matrix[y][x]
@@ -65,41 +63,65 @@ class GameBoard():
 
     def countCarSize(self,x,y,orientation,car):
         checked = False
-        sum = 1
+        size = 1
 
         if orientation == "v":
             while not checked:
                 try:
-                    if not self.board_matrix[y+sum][x] == car:
+                    if not self.board_matrix[y+size][x] == car:
                         checked = True
-                    sum += 1
+                    else:
+                        size += 1
                 except IndexError:
                     checked = True
         else:
             while not checked:
                 try:
-                    if not self.board_matrix[y][x+sum] == car:
+                    if not self.board_matrix[y][x+size] == car:
                         checked = True
-                    sum += 1
+                    else:
+                        size += 1
                 except IndexError:
                     checked = True
                   
-        return sum
+        return size
+
 
     def printBoard(self):
         for x in self.board_matrix:
             print(x)
 
-    def updateCarPosition(self, name, pos_x, pos_y, size, orientation):
 
-        """ Clean latest position """
-        for row in board_matrix:
-            for col in row:
-                print("Tablero")
+    def updateMatrix(self):
+        self.clearMatrix() 
+        for car in self.cars:
+            self.updateCarPosition(car)                    
+    
+    def updateCarPosition(self, car):
+        for length in range(car.size):
+            if car.orientation == "v": 
+                self.board_matrix[car.pos_y+length][car.pos_x] = car.name
+            else:
+                self.board_matrix[car.pos_y][car.pos_x+length] = car.name
+                
+        
+    def clearMatrix(self):
 
+        for y in range(len(self.board_matrix)):
+            for x in range(len(self.board_matrix)):
+                self.board_matrix[y][x] = 0
+
+    def moveCar(self, car, move):
+        logging.debug("Moving car " + str(car) )
+        self.cars[car-1].move(move)
+        self.updateMatrix()
                         
 
 #TESTS
 if __name__ == '__main__':
     board = GameBoard("1-1")
     board.printBoard()
+    board.moveCar(2, "dw")
+    board.moveCar(1, "up")
+    board.printBoard()
+ 

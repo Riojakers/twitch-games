@@ -23,34 +23,34 @@ class Car():
         
         if self.orientation == "v":
             if direction == "up":
-                self.move_up()
+                self.moveUp()
             elif direction == "dw":
-                self.move_down()
+                self.moveDown()
             else:
                 logging.warning("Cars in a upright position can only be moved up or down")
         elif self.orientation == "h":
             if direction == "rg":
-                self.move_right()
+                self.moveRight()
             elif direction == "lf":
-                self.move_left()
+                self.moveLeft()
             else:
-                logging.warning("Cars in horizontal position can only be moved up or down")
+                logging.warning("Cars in horizontal position can only be moved rigth or left")
     
 
     def moveUp(self):
-        try:
+        if self.pos_y-1 >= 0:
             if self.board.get()[self.pos_y-1][self.pos_x] == 0:
-                    self.board.updateCarPosition(self.name, self.pos_y-1,self.pos_x, self.size, self.orientation)
+                self.pos_y -= 1 
             else:
                 logging.warning("The car have crashed against another car")   
-        except IndexError:
+        else:    
             logging.warning("The car have crashed against a wall")
 
 
     def moveDown(self):
         try:
             if self.board.get()[self.pos_y+1][self.pos_x] == 0:
-                    self.board.updateCarPosition(self.name, self.pos_y+1, self.pos_x, self.size, self.orientation)
+                self.post_y += 1 
             else:
                 logging.warning("The car have crashed against another car")   
         except IndexError:
@@ -60,7 +60,7 @@ class Car():
     def moveRight(self):
         try:
             if self.board.get()[self.pos_y][self.pos_x+1] == 0:
-                    self.board.updateCarPosition(self.name, self.pos_y, self.pos_x+1, self.size, self.orientation)
+                self.pos_x += 1 
             else:
                 logging.warning("The car have crashed against another car")   
         except IndexError:
@@ -70,7 +70,7 @@ class Car():
     def moveLeft(self):
         try:
             if self.board.get()[self.pos_y][self.pos_x-1] == 0:
-                    self.board.updateCarPosition(self.name, [self.pos_y][self.pos_x-1], self.size, self.orientation)
+                    self.pos_x -= 1
             else:
                 logging.warning("The car have crashed against another car")   
         except IndexError:

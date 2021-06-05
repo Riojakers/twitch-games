@@ -20,7 +20,7 @@ class GameBoard():
         return self.board_matrix
 
     def createBoard(self, stage):
-        file_board = open("rusthour/boards/" + stage)
+        file_board = open("boards/" + stage)
         
         for line in file_board.readlines():
             self.board_matrix.append([int(value) for value in line.rstrip().split(" ")])

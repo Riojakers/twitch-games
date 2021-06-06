@@ -6,9 +6,17 @@ pg.init()
 
 
 class CarElement:
-    def __init__(self, car):
+    def __init__(self, car, board):
         self.car = car
         self.sprite = pg.image.load("images/orange.png")
+        self.board = board
+
+        if self.car.orientation == 'v':
+            self.sprite = pg.transform.scale(self.sprite, (int(board.w), int(board.w * 2 + board.space)))
+
+        if self.car.orientation == 'h':
+            self.sprite = pg.transform.rotate(self.sprite, 90)
+            self.sprite = pg.transform.scale(self.sprite, (int(board.w * 2 + board.space), int(board.w)))
 
     def draw(self, board):
         x = (self.car.pos_x * board.w) + (board.space * (self.car.pos_x + 1))
@@ -23,12 +31,13 @@ class Board:
 
     def __init__(self):
         self.board = GameBoard("1-1")
-        self.cars = [CarElement(car) for car in self.board.cars]
         self.clock = pg.time.Clock()
         self.screen = pg.display.set_mode((self.size, self.size))
         self.screen_rect = self.screen.get_rect()
 
         self.w = (self.size / self.board.size) - (self.space + (self.space / self.board.size))
+
+        self.cars = [CarElement(car, self) for car in self.board.cars]
 
     def draw(self):
         done = False

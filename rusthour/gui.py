@@ -32,6 +32,7 @@ class Board:
 
     def __init__(self):
         self.board = GameBoard("1-1")
+        self.sprite_board = pg.image.load("images/board.png")
         self.clock = pg.time.Clock()
         self.screen = pg.display.set_mode((self.size, self.size))
         self.screen_rect = self.screen.get_rect()
@@ -49,24 +50,23 @@ class Board:
             self.draw_board()
             self.draw_elements()
 
-            self.clock.tick(40)
+            self.clock.tick(10)
             pg.display.flip()
             pg.display.update()
 
-    def draw_board(self):
-        x = 0
-        y = 0
-        for row in range(0, self.board.size):
-            y = y + self.space
-            for col in range(0, self.board.size):
-                x = x + self.space
-                box = pg.Rect(x, y, self.w, self.w)
-                # board_matrix
-                pg.draw.rect(self.screen, (255, 255, 255), box)
+            events = pg.event.get()
+            for event in events:
+                if event.type == pg.KEYDOWN:
+                    if event.key == pg.K_LEFT:
+                        self.board.moveCar(1, 'lf')
 
-                x = x + self.w
-            y = y + self.w
-            x = 0
+                if event.type == pg.KEYDOWN:
+                    if event.key == pg.K_RIGHT:
+                        self.board.moveCar(1, 'rg')
+
+    def draw_board(self):
+        board.screen.blit(self.sprite_board, pg.Rect(0, 0, self.size, self.size))
+
 
     def draw_elements(self):
         for car in self.cars:

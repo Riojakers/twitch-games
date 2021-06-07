@@ -69,7 +69,7 @@ class Car():
 
     def moveLeft(self):
         try:
-            if self.board.get()[self.pos_y][self.pos_x-1] == 0:
+            if self.board.get()[self.pos_y][self.pos_x-1] == 0 and self.pos_x - 1 >= 0:
                     self.pos_x -= 1
             else:
                 logging.warning("The car have crashed against another car")   

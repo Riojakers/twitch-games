@@ -8,15 +8,16 @@ pg.init()
 class CarElement:
     def __init__(self, car, board):
         self.car = car
-        self.sprite = pg.image.load("images/orange.png")
+
+        self.sprite = pg.image.load("images/"+str(self.car.name)+".png")
         self.board = board
 
         if self.car.orientation == 'v':
-            self.sprite = pg.transform.scale(self.sprite, (int(board.w), int(board.w * 2 + board.space)))
+            self.sprite = pg.transform.scale(self.sprite, (int(board.w), int(board.w * self.car.size + board.space * (self.car.size - 1))))
 
         if self.car.orientation == 'h':
             self.sprite = pg.transform.rotate(self.sprite, 90)
-            self.sprite = pg.transform.scale(self.sprite, (int(board.w * 2 + board.space), int(board.w)))
+            self.sprite = pg.transform.scale(self.sprite, (int(board.w * self.car.size + board.space * (self.car.size - 1)), int(board.w)))
 
     def draw(self, board):
         x = (self.car.pos_x * board.w) + (board.space * (self.car.pos_x + 1))

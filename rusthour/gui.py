@@ -16,7 +16,7 @@ class CarElement:
             self.sprite = pg.transform.scale(self.sprite, (int(board.w), int(board.w * self.car.size + board.space * (self.car.size - 1))))
 
         if self.car.orientation == 'h':
-            self.sprite = pg.transform.rotate(self.sprite, 90)
+            self.sprite = pg.transform.rotate(self.sprite, -90)
             self.sprite = pg.transform.scale(self.sprite, (int(board.w * self.car.size + board.space * (self.car.size - 1)), int(board.w)))
 
     def draw(self, board):
@@ -71,4 +71,5 @@ class Board:
     def draw_elements(self):
         for car in self.cars:
             car.draw(self)
+
 

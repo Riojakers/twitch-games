@@ -6,6 +6,8 @@ import logging
 
 from api.config import oauth, nick, channel
 
+from twitchAPI.twitch import Twitch
+
 '''
 # color: red, blue, grey....
 # direction: up, down, left, right
@@ -19,6 +21,8 @@ async def run_app():
 
 asyncio.get_event_loop().run_until_complete(run_app())
 '''
+
+
 
 
 class CommandChat:
@@ -35,6 +39,10 @@ class CommandChat:
         # Standard replaces
         while "  " in command:
             command = command.replace("  ", " ")
+        # Commands
+        if command.startswith("!commands"):
+            print("HEY")
+            self.chat.send('PRIVMSG #<rimander> :This is a sample message')
 
         # Start with !move
         if not command.startswith("!move"):
@@ -44,7 +52,7 @@ class CommandChat:
         direction = command.split(" ")[2].strip()
 
         # Valid color
-        if color not in ['red', 'blue']:
+        if color not in ['red', 'blue', 'orange', 'white', 'black', 'yellow']:
             return
 
         # Valir direction
@@ -136,6 +144,9 @@ class ChatWrapper:
     def on_close(self, ws):
         if self.debug:
             logging.info('WSS closed')
+
+    def send(self, pass_message):
+        self.ws.send(pass_message)
 
     def on_open(self, ws):
         def run(*args):

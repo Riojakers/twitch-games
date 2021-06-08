@@ -9,15 +9,17 @@ class CarElement:
     def __init__(self, car, board):
         self.car = car
 
-        self.sprite = pg.image.load("images/"+str(self.car.name)+".png")
+        self.sprite = pg.image.load("images/" + str(self.car.name) + ".png")
         self.board = board
 
         if self.car.orientation == 'v':
-            self.sprite = pg.transform.scale(self.sprite, (int(board.w), int(board.w * self.car.size + board.space * (self.car.size - 1))))
+            self.sprite = pg.transform.scale(self.sprite, (
+            int(board.w), int(board.w * self.car.size + board.space * (self.car.size - 1))))
 
         if self.car.orientation == 'h':
             self.sprite = pg.transform.rotate(self.sprite, -90)
-            self.sprite = pg.transform.scale(self.sprite, (int(board.w * self.car.size + board.space * (self.car.size - 1)), int(board.w)))
+            self.sprite = pg.transform.scale(self.sprite, (
+            int(board.w * self.car.size + board.space * (self.car.size - 1)), int(board.w)))
 
     def draw(self, board):
         x = (self.car.pos_x * board.w) + (board.space * (self.car.pos_x + 1))
@@ -54,22 +56,9 @@ class Board:
             pg.display.flip()
             pg.display.update()
 
-            events = pg.event.get()
-            for event in events:
-                if event.type == pg.KEYDOWN:
-                    if event.key == pg.K_LEFT:
-                        self.board.moveCar(1, 'lf')
-
-                if event.type == pg.KEYDOWN:
-                    if event.key == pg.K_RIGHT:
-                        self.board.moveCar(1, 'rg')
-
     def draw_board(self):
         self.screen.blit(self.sprite_board, pg.Rect(0, 0, self.size, self.size))
-
 
     def draw_elements(self):
         for car in self.cars:
             car.draw(self)
-
-

@@ -65,35 +65,7 @@ class GameBoard():
 
         """ Sort by name """
         self.cars = sorted(self.cars, key=lambda k: k.name)
-        """
-        lastCar = False
-
-        car = 1
-
-        while not lastCar:
-            eccounter = False
-            for y in range(self.size):
-                for x in range(self.size):
-                    car_size = 0
-                    car_orientation = ""
-                    actual_value = self.board_matrix[y][x]
-
-                    if car == actual_value and not eccounter:
-                        eccounter = True
-                        
-                        if car == self.board_matrix[min(self.size - 1, y + 1)][x]:
-                            car_orientation = "v"
-                            car_size = self.countCarSize(x, y, car_orientation, car)
-                            self.cars.append(Car(car, x, y, car_orientation, car_size, self))
-                        else:
-                            car_orientation = "h"
-                            car_size = self.countCarSize(x, y, car_orientation, car)
-                            self.cars.append(Car(car, x, y, car_orientation, car_size, self))
-
-            if not eccounter:
-                lastCar = True
-            car += 1
-        """
+  
 
     def countCarSize(self, x, y, orientation, car):
         checked = False

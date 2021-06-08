@@ -6,25 +6,6 @@ import logging
 
 from api.config import oauth, nick, channel
 
-from twitchAPI.twitch import Twitch
-
-'''
-# color: red, blue, grey....
-# direction: up, down, left, right
-def on_move_event(color, direction):
-    pass
-
-
-async def run_app():
-    CommandChat(debug=False, on_move_event=on_move_event)
-
-
-asyncio.get_event_loop().run_until_complete(run_app())
-'''
-
-
-
-
 class CommandChat:
 
     def __init__(self, on_move_event=None, debug=False):
@@ -39,10 +20,10 @@ class CommandChat:
         # Standard replaces
         while "  " in command:
             command = command.replace("  ", " ")
+
         # Commands
         if command.startswith("!commands"):
-            print("HEY")
-            self.chat.send('PRIVMSG #<rimander> :This is a sample message')
+            self.chat.send(channel, '!move red up, !move red down, !move red right, !move red left')
 
         # Start with !move
         if not command.startswith("!move"):
@@ -145,8 +126,8 @@ class ChatWrapper:
         if self.debug:
             logging.info('WSS closed')
 
-    def send(self, pass_message):
-        self.ws.send(pass_message)
+    def send(self, channel, pass_message):
+        self.ws.send('PRIVMSG #{} :{}'.format(channel, pass_message))
 
     def on_open(self, ws):
         def run(*args):

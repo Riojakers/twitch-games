@@ -30,8 +30,8 @@ class Board:
     size = 900
     space = 20
 
-    def __init__(self):
-        self.board = GameBoard("1-1")
+    def __init__(self, board):
+        self.board = board
         self.sprite_board = pg.image.load("images/board.png")
         self.clock = pg.time.Clock()
         self.screen = pg.display.set_mode((self.size, self.size))
@@ -65,13 +65,10 @@ class Board:
                         self.board.moveCar(1, 'rg')
 
     def draw_board(self):
-        board.screen.blit(self.sprite_board, pg.Rect(0, 0, self.size, self.size))
+        self.screen.blit(self.sprite_board, pg.Rect(0, 0, self.size, self.size))
 
 
     def draw_elements(self):
         for car in self.cars:
             car.draw(self)
 
-
-board = Board()
-board.draw()
